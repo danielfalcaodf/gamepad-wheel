@@ -24,3 +24,6 @@ tmp/
 CLAUDE.local.md
 .playwright-mcp/
 .maestro/screenshots/
+
+# Local tool state
+.serena/
