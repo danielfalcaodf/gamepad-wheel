@@ -1,0 +1,26 @@
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editors
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.swp
+*~
+
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Logs and temp
+*.log
+tmp/
+
+# Claude Code / MCP (local)
+.claude/settings.local.json
+CLAUDE.local.md
+.playwright-mcp/
+.maestro/screenshots/
