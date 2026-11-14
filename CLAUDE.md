@@ -21,7 +21,7 @@ Turns an Android phone (gyroscope) + a GameSir Nova 2 Lite into a single virtual
 
 - **maestro**: drive the Android app on a device/emulator (R1, R2, R12, R13 flows). Requires the Maestro CLI on `PATH` and Java 17+.
 - **playwright**: only useful if Q7 picks Tauri (web GUI). Unused with egui.
-- **context7**: current docs for crates/SDKs (`vigem-client`, egui, Jetpack Compose, Android sensors). Use before writing library-dependent code.
+- **context7**: current docs for crates/SDKs (`vigem-rust`, egui, Jetpack Compose, Android sensors). Use before writing library-dependent code.
 
 ## Agent skills
 

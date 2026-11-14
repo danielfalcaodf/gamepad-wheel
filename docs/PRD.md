@@ -39,7 +39,7 @@ O mixer aplica o perfil do jogo aberto: combina celular e stick na direção e t
 | Decisão | Escolha | Motivo |
 | --- | --- | --- |
 | Linguagem do PC | Rust | um .exe pequeno, sem dependências, latência estável; o autor quer aprender Rust |
-| Controle virtual | ViGEmBus, crate `vigem-client` | o jogo enxerga um Xbox 360 comum, sem configurar nada no jogo |
+| Controle virtual | ViGEmBus, crate `vigem-rust` (ver ADR 0002) | o jogo enxerga um Xbox 360 comum, sem configurar nada no jogo; a crate recebe o rumble do jogo (R14) |
 | Esconder o controle físico | HidHide, ligado e desligado pelo programa | o jogo não vê dois controles |
 | Interface gráfica | egui (decidido na Q7) | Rust puro, binário único, mais leve que webview (Tauri/Electron), bom para teste ao vivo |
 | Perfis | arquivos TOML editados pela GUI | legíveis, versionáveis no Git, fáceis de compartilhar depois |
@@ -166,12 +166,12 @@ Todas se respondem com um teste rápido (spike) no seu PC antes de escrever o re
 
 | # | Pergunta | Bloqueia | Como responder | Plano B |
 | --- | --- | --- | --- | --- |
-| Q1 | Com o HidHide escondendo o Nova 2 Lite, o nosso programa (na lista de permitidos) ainda consegue lê-lo via XInput? | R3, R8 | spike: esconder no HidHide e ler com o programa permitido | ler via HID bruto/SDL em vez de XInput |
+| Q1 | Com o HidHide escondendo o Nova 2 Lite, o nosso programa (na lista de permitidos) ainda consegue lê-lo via XInput? | R3, R8 | spike: esconder no HidHide e ler com o programa permitido. Pesquisa: a doc do HidHide diz que apps permitidos acessam dispositivos escondidos (mesmo esquema do DS4Windows), mas nenhuma fonte confirma o caso XInput | ler via HID bruto/SDL em vez de XInput |
 | Q2 | No modo XBOX, os botões traseiros L4/R4 só copiam um botão existente, então o PC não os distingue. Qual botão vira a camada? | R11 | **Plano A (decidido):** no app da GameSir, L4/R4 viram um macro com uma combinação que ninguém usa dirigindo (ex.: LB+RB+R3), e o programa decodifica essa "assinatura" como camada. Spike: confirmar que o app faz macro nos traseiros do Nova 2 Lite e que o macro fica pressionado enquanto o botão é segurado | usar View (Back) como camada |
 | Q3 | O Nova 2 Lite no dongle aceita vibração enviada pelo PC (XInputSetState)? | R7, R14 | **Respondida: sim.** O autor já sente vibração em jogos no PC pelo dongle no modo XBOX | aviso só na GUI e no celular |
-| Q4 | O ViGEmBus ainda é mantido e funciona no Windows atual? | R4 | conferir o repositório e instalar | outro driver de controle virtual (avaliar) |
-| Q5 | Teclas enviadas pelo programa (SendInput) chegam a ETS2, Forza, BeamNG e GTA? | R11, R12 | testar seta/farol em cada jogo | usar códigos de varredura (scan codes) em vez de teclas virtuais |
-| Q6 | Algum jogo com modo online/anti-cheat bloqueia controle virtual ou teclas simuladas? | jogos-alvo | testar GTA e Forza online (**online é requisito**, não opcional) | usar só no modo offline nos jogos que bloquearem |
+| Q4 | O ViGEmBus ainda é mantido e funciona no Windows atual? | R4 | **Respondida:** não é mantido (arquivado em nov/2023), mas a versão 1.17+ funciona no Windows 10/11 e o Sunshine ainda depende dele em 2026. Decisão no ADR 0002 | Virtual HID Driver (LizardByte, pago, sem Xbox 360) ou VIIPER (DS4Windows 5, em RC) |
+| Q5 | Teclas enviadas pelo programa (SendInput) chegam a ETS2, Forza, BeamNG e GTA? | R11, R12 | **Plano A (decidido):** `SendInput` com `KEYEVENTF_SCANCODE` (jogos com DirectInput ignoram teclas virtuais). Spike: confirmar seta/farol nos 4 grupos | teclas virtuais, ou driver de teclado virtual |
+| Q6 | Algum jogo com modo online/anti-cheat bloqueia controle virtual ou teclas simuladas? | jogos-alvo | testar GTA e Forza online (**online é requisito**, não opcional). Pesquisa: GTA Online usa BattlEye desde set/2024; nenhum relato encontrado de ban por ViGEm/DS4Windows (ausência de evidência, não garantia). **Teste adiado para o fim da fase 1** | usar só no modo offline nos jogos que bloquearem |
 | Q7 | GUI em egui (Rust puro) ou Tauri (web + Rust)? | R9 | **Respondida: egui.** Prioridade é desempenho e peso: sem webview, binário único. A identidade visual entra via tema do egui | — |
 
 Riscos que não bloqueiam: o firewall do Windows vai pedir permissão na primeira vez (porta UDP); o suporte barato pode deixar o celular solto e gerar tremida no ângulo (zona morta e filtro no R5 compensam); Wi-Fi 2,4 GHz congestionado aumenta a latência (a GUI deve mostrar isso).
