@@ -41,7 +41,7 @@ O mixer aplica o perfil do jogo aberto: combina celular e stick na direção e t
 | Linguagem do PC | Rust | um .exe pequeno, sem dependências, latência estável; o autor quer aprender Rust |
 | Controle virtual | ViGEmBus, crate `vigem-client` | o jogo enxerga um Xbox 360 comum, sem configurar nada no jogo |
 | Esconder o controle físico | HidHide, ligado e desligado pelo programa | o jogo não vê dois controles |
-| Interface gráfica | egui (a confirmar na Q7) | Rust puro, binário único, bom para teste ao vivo |
+| Interface gráfica | egui (decidido na Q7) | Rust puro, binário único, mais leve que webview (Tauri/Electron), bom para teste ao vivo |
 | Perfis | arquivos TOML editados pela GUI | legíveis, versionáveis no Git, fáceis de compartilhar depois |
 | App do celular | Kotlin nativo + Compose | acesso direto ao sensor de rotação fundido, menor latência |
 | Transporte | UDP no Wi-Fi, protocolo binário próprio e versionado | simples e rápido; o mesmo protocolo serve para USB e iOS no futuro |
@@ -167,12 +167,12 @@ Todas se respondem com um teste rápido (spike) no seu PC antes de escrever o re
 | # | Pergunta | Bloqueia | Como responder | Plano B |
 | --- | --- | --- | --- | --- |
 | Q1 | Com o HidHide escondendo o Nova 2 Lite, o nosso programa (na lista de permitidos) ainda consegue lê-lo via XInput? | R3, R8 | spike: esconder no HidHide e ler com o programa permitido | ler via HID bruto/SDL em vez de XInput |
-| Q2 | No modo XBOX, os botões traseiros L4/R4 só copiam um botão existente, então o PC não os distingue. Qual botão vira a camada? | R11 | testar o que o PC recebe ao apertar L4/R4 | usar View (Back) como camada, ou ler o controle em outro modo que exponha botões extras |
-| Q3 | O Nova 2 Lite no dongle aceita vibração enviada pelo PC (XInputSetState)? | R7, R14 | spike com um teste de rumble | aviso só na GUI e no celular |
+| Q2 | No modo XBOX, os botões traseiros L4/R4 só copiam um botão existente, então o PC não os distingue. Qual botão vira a camada? | R11 | **Plano A (decidido):** no app da GameSir, L4/R4 viram um macro com uma combinação que ninguém usa dirigindo (ex.: LB+RB+R3), e o programa decodifica essa "assinatura" como camada. Spike: confirmar que o app faz macro nos traseiros do Nova 2 Lite e que o macro fica pressionado enquanto o botão é segurado | usar View (Back) como camada |
+| Q3 | O Nova 2 Lite no dongle aceita vibração enviada pelo PC (XInputSetState)? | R7, R14 | **Respondida: sim.** O autor já sente vibração em jogos no PC pelo dongle no modo XBOX | aviso só na GUI e no celular |
 | Q4 | O ViGEmBus ainda é mantido e funciona no Windows atual? | R4 | conferir o repositório e instalar | outro driver de controle virtual (avaliar) |
 | Q5 | Teclas enviadas pelo programa (SendInput) chegam a ETS2, Forza, BeamNG e GTA? | R11, R12 | testar seta/farol em cada jogo | usar códigos de varredura (scan codes) em vez de teclas virtuais |
-| Q6 | Algum jogo com modo online/anti-cheat bloqueia controle virtual ou teclas simuladas? | jogos-alvo | testar GTA e Forza online | usar só no modo offline |
-| Q7 | GUI em egui (Rust puro) ou Tauri (web + Rust)? | R9 | protótipo de uma tela em cada | egui por padrão (binário único) |
+| Q6 | Algum jogo com modo online/anti-cheat bloqueia controle virtual ou teclas simuladas? | jogos-alvo | testar GTA e Forza online (**online é requisito**, não opcional) | usar só no modo offline nos jogos que bloquearem |
+| Q7 | GUI em egui (Rust puro) ou Tauri (web + Rust)? | R9 | **Respondida: egui.** Prioridade é desempenho e peso: sem webview, binário único. A identidade visual entra via tema do egui | — |
 
 Riscos que não bloqueiam: o firewall do Windows vai pedir permissão na primeira vez (porta UDP); o suporte barato pode deixar o celular solto e gerar tremida no ângulo (zona morta e filtro no R5 compensam); Wi-Fi 2,4 GHz congestionado aumenta a latência (a GUI deve mostrar isso).
 
