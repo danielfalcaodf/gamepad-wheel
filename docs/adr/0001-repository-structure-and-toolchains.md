@@ -6,7 +6,7 @@ status: accepted
 
 The project is a Windows-only Rust program (ViGEmBus + HidHide) plus a native Kotlin Android app talking over UDP. The two halves share no code, only the wire format. So one repository holds `desktop/` (a Cargo workspace) and `mobile/` (a Gradle project with the standard `:app` module), and each side uses its own native tooling. There is no orchestrator on top. The only shared contract is the UDP protocol, which will be documented in `docs/` when R1 is specified.
 
-Scaffolding waits for the phase 0 spikes (PRD Q1–Q7), because their answers decide how R3, R8, R11 and the GUI are built. Spike code lives in `spikes/qN-<slug>/`. Each spike is self-contained (its own `Cargo.toml`, outside the future workspace) and has a README that records the answer.
+Scaffolding waits for the phase 0 spikes (PRD Q1–Q7), because their answers decide how R3, R8 and R11 are built (the GUI is settled: egui, see PRD Q7). Spike code lives in `spikes/qN-<slug>/`. Each spike is self-contained (its own `Cargo.toml`, outside the future workspace) and has a README that records the answer.
 
 ## Decisions
 
