@@ -1,0 +1,9 @@
+[package]
+name = "q1-xinput-probe"
+version = "0.0.0"
+edition = "2024"
+publish = false
+license = "MIT OR Apache-2.0"
+
+[target.'cfg(windows)'.dependencies]
+windows = { version = "0.62.2", features = ["Win32_UI_Input_XboxController"] }
