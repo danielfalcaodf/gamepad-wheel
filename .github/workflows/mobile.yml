@@ -1,0 +1,23 @@
+name: mobile
+
+on:
+  push:
+    branches: [develop, main]
+    paths: [mobile/**, .github/workflows/mobile.yml]
+  pull_request:
+    paths: [mobile/**, .github/workflows/mobile.yml]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: mobile
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: 21
+      - uses: gradle/actions/setup-gradle@v6
+      - run: ./gradlew lint testDebugUnitTest assembleDebug

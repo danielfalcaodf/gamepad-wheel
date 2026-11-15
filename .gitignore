@@ -27,3 +27,16 @@ CLAUDE.local.md
 
 # Local tool state
 .serena/
+
+# Rust
+target/
+
+# Android / Gradle
+.gradle/
+.kotlin/
+build/
+local.properties
+*.apk
+
+# Editor local history
+.history/

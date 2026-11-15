@@ -1,0 +1,9 @@
+[package]
+name = "q4-vigem-pad"
+version = "0.0.0"
+edition = "2024"
+publish = false
+license = "MIT OR Apache-2.0"
+
+[target.'cfg(windows)'.dependencies]
+vigem-rust = "0.2.0"

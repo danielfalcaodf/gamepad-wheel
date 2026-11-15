@@ -1,0 +1,6 @@
+# One pin for desktop/ and spikes/. The Windows target lets Linux run
+# `cargo check`/`clippy` on Windows-only code (no linking needed).
+[toolchain]
+channel = "1.100.0"
+components = ["rustfmt", "clippy"]
+targets = ["x86_64-pc-windows-msvc"]
