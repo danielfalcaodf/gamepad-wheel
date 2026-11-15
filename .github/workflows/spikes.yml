@@ -1,0 +1,30 @@
+name: spikes
+
+# Builds every spike as a Windows .exe and uploads them as one artifact:
+#   gh run download --name spikes-windows
+on:
+  workflow_dispatch:
+  push:
+    paths: [spikes/**, rust-toolchain.toml, .github/workflows/spikes.yml]
+  pull_request:
+    paths: [spikes/**, rust-toolchain.toml, .github/workflows/spikes.yml]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    env:
+      CARGO_TARGET_DIR: ${{ github.workspace }}/target
+    steps:
+      - uses: actions/checkout@v7
+      - name: Check and build each spike
+        shell: bash
+        run: |
+          for d in spikes/*/; do
+            echo "::group::$d"
+            (cd "$d" && cargo fmt --check && cargo clippy -- -D warnings && cargo test && cargo build --release)
+            echo "::endgroup::"
+          done
+      - uses: actions/upload-artifact@v7
+        with:
+          name: spikes-windows
+          path: target/release/*.exe

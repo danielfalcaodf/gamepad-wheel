@@ -1,0 +1,25 @@
+name: desktop
+
+on:
+  push:
+    branches: [develop, main]
+    paths: [desktop/**, rust-toolchain.toml, .github/workflows/desktop.yml]
+  pull_request:
+    paths: [desktop/**, rust-toolchain.toml, .github/workflows/desktop.yml]
+
+jobs:
+  check:
+    runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: desktop
+    steps:
+      - uses: actions/checkout@v7
+      # rustup on the runner installs the toolchain pinned in rust-toolchain.toml.
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: desktop
+      - run: cargo fmt --check
+      - run: cargo clippy --all-targets -- -D warnings
+      - run: cargo test
+      - run: cargo build --release
