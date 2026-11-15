@@ -15,12 +15,12 @@ Phase 0: technical spikes. The skeleton builds, but there are no features yet. P
 ## Repository layout
 
 ```text
-desktop/              Cargo workspace: the Windows program (gamepad-wheel.exe)
+desktop/              Cargo workspace: the Windows program (gamepad-wheel.exe) and the egui theme (gw-theme)
 mobile/               Gradle project: the Android app (module :app)
 spikes/               Phase 0 throwaway programs, one per PRD open question
 scripts/check.sh      Runs every CI check locally
 rust-toolchain.toml   Rust version pin shared by desktop/ and spikes/
-docs/                 PRD, ADRs, agent docs
+docs/                 PRD, ADRs, design handoff and tokens (docs/design/), agent docs
 ```
 
 ## Development
