@@ -10,14 +10,14 @@ Scaffolding waits for the phase 0 spikes (PRD Q1–Q7), because their answers de
 
 ## Decisions
 
-- **Rust**: the toolchain is pinned with `rust-toolchain.toml` to the current stable release. Pure logic (protocol, mixer) builds and tests on any OS. Windows-only code sits behind `cfg(windows)`. Day-to-day development and tests run on Linux, and CI on `windows-latest` proves the `.exe` builds. Running against real drivers happens on the Windows machine.
-- **Android**: `minSdk 26`; `compileSdk`/`targetSdk` = latest stable. Compose requires API 23 or later, and `TYPE_GAME_ROTATION_VECTOR` exists since API 18.
-- **Quality gates**: CI only (fmt, clippy, tests on the Rust side; ktlint/lint and tests on the Android side). No local git hooks.
+- **Rust**: the toolchain is pinned by one root `rust-toolchain.toml` (shared by `desktop/` and `spikes/`) to the current stable release, with the Windows target added so Linux can `check`/`clippy` Windows-only code. Locally, Rust runs inside the official `rust` Docker image (`scripts/check.sh`), so contributors need no host Rust install. Pure logic (protocol, mixer) builds and tests on any OS. Windows-only code sits behind `cfg(windows)`. Day-to-day development and tests run on Linux, and CI on `windows-latest` proves the `.exe` builds. Running against real drivers happens on the Windows machine.
+- **Android**: `minSdk 26`; `compileSdk`/`targetSdk` = latest stable (37: current Compose and activity require it). Compose requires API 23 or later, and `TYPE_GAME_ROTATION_VECTOR` exists since API 18.
+- **Quality gates**: CI only (fmt, clippy, tests on the Rust side; Android lint with warnings as errors, plus tests, on the Android side). No local git hooks. `scripts/check.sh` runs the same checks locally.
 
 ## Considered Options
 
 - **Turborepo / pnpm / Node**: rejected. No JavaScript is shipped, and Cargo and Gradle already manage their own workspaces, so an orchestrator would add a toolchain and gain nothing.
-- **Docker / docker-compose / database / `/health` walking skeleton**: rejected. ViGEmBus and HidHide are Windows kernel drivers and cannot run in a container, and an Android app does not run in Docker either. There is no server and no database: profiles are TOML files.
+- **Docker / docker-compose / database / `/health` walking skeleton**: rejected as a way to *run* the product. Docker appears only as the local Rust toolchain. ViGEmBus and HidHide are Windows kernel drivers and cannot run in a container, and an Android app does not run in Docker either. There is no server and no database: profiles are TOML files.
 - **Husky + lint-staged**: rejected because they require Node. Shell hooks and lefthook were also declined in favour of CI-only checks, to keep setup at zero steps per clone.
 - **Two repositories**: rejected. A single solo maintainer would pay the coordination cost and get no benefit.
 - **Local cross-compilation to Windows (cargo-xwin / windows-gnu)**: deferred. Windows CI covers compilation. Add cross-compilation only if waiting for CI becomes a bottleneck.

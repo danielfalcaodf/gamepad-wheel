@@ -3,7 +3,7 @@
 Turns an Android phone (gyroscope) + a GameSir Nova 2 Lite into a single virtual Xbox 360 controller on Windows: the phone, clipped to the gamepad, steers; the gamepad does everything else. PC side in Rust (ViGEmBus + HidHide), phone app in native Kotlin, UDP over Wi-Fi. Open source (MIT OR Apache-2.0).
 
 - Product source of truth: `docs/PRD.md` (Portuguese). Current phase: **phase 0 spikes** (Q1–Q7 decide how R3, R8, R11 are built).
-- No stack is installed yet. Do not scaffold a framework without an issue/decision on record.
+- Layout and toolchains: ADR 0001 (`desktop/` Rust, `mobile/` Android, `spikes/`). Run all checks with `scripts/check.sh` (Rust runs in Docker). Do not add a framework without an issue/decision on record.
 - Docs, code comments, commits, issues and PRs are written in **English**.
 
 ## Branches (gitflow)
