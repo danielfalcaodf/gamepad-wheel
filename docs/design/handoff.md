@@ -128,24 +128,26 @@ Toggle (40×22) and slider thumb (18) sizes are tokens only: those components ar
 
 | Screen (board) | Requirements | Components it needs |
 | --- | --- | --- |
-| 01 · PC · Status | R9 (status window, tray icon), R8 (missing driver notice), R6 (Recentralizar in the top bar), R3 and R7 (device states), R10 (active profile) | card, badge, button, alert; to build: sidebar nav, top-bar pill, profile selector, key-value row, tray menu |
+| 01 · PC · Status | R9 (status window, tray icon), R8 (missing driver notice), R6 (Recentralizar in the top bar), R3 (incl. Nova 2 Lite disconnected) and R7 (device states), R10 (active profile) | card, badge, button, alert; to build: sidebar nav, top-bar pill, profile selector, key-value row, tray menu |
 | 02 · PC · Pareamento | R2 (QR, token, network card choice) | card, badge, button, field, alert; to build: QR view, radio option list |
 | 03 · PC · Perfis | R10, R9 (profile editor entry) | button, badge, alert; to build: table, icon button, executable chip, confirm dialog, toast with undo |
 | 04 · PC · Editor de perfil — Direção | R5, R6 (recentre button choice), R10 (executables) | field, button, badge, alert; to build: tabs, radio mode cards, slider with value box, select, steering preview bar |
 | 05 · PC · Editor de perfil — Combos e botões da tela | R11, R12 | button, badge, field, alert; to build: table, key cap, Xbox button pill, segmented control, phone layout preview |
-| 06 · PC · Teste ao vivo | R9 (live test), R7, R14 (test vibration) | card, badge, button, alert, number text; to build: steering bar, trigger bars, stick view, button pills, latency chart |
-| 07 · Celular · Pareamento | R2 | `GwButton`, `StatusBadge`; to build: camera viewfinder |
-| 08 · Celular · Direção | R13, R12, R6, R7, R1 (screen stays on) | `GwButton`, `StatusBadge`; to build: on-screen game button tile, angle indicator, output bar, dark-screen mode |
+| 06 · PC · Teste ao vivo | R9 (live test), R7 (incl. vibrate toggle), R14 (test vibration) | card, badge, button, alert, number text; to build: steering bar, trigger bars, stick view, button pills, latency chart, toggle |
+| 07 · Celular · Pareamento | R2 (incl. camera denied), R1 (phone without rotation sensor) | `GwButton`, `StatusBadge`; to build: camera viewfinder |
+| 08 · Celular · Direção | R13 (incl. "Tela escura" button), R12, R6, R7, R1 (screen stays on) | `GwButton`, `StatusBadge`; to build: on-screen game button tile, angle indicator, output bar, dark-screen mode |
 
 ## Gaps
 
 ### Requirement without a screen or state
 
-- **R3**: no screen shows the Nova 2 Lite disconnected. The badge exists on the design system board only.
-- **R2 / R13**: no state for camera permission denied on the phone.
-- **R13**: the dark-screen mode shows how to leave it (double tap), not how to enter it.
-- **R7**: the "Vibrar ao perder conexão" toggle is on the design system board but on no screen.
-- **R1**: no state for a phone without a rotation sensor.
+None. The five gaps found first were added to the canvas (#6):
+
+- **R3**: "Nova 2 Lite desconectado" error state on 01 · PC · Status.
+- **R7**: "Vibrar o Nova 2 Lite ao perder conexão" toggle in the Conexão card of 06 · PC · Teste ao vivo.
+- **R13**: labelled "Tela escura" button in the top bar of 08 · Celular · Direção (double tap in the centre still leaves).
+- **R2 / R13**: "Câmera bloqueada" error state on 07 · Celular · Pareamento.
+- **R1**: "Celular incompatível" error state on 07 · Celular · Pareamento, shown on app start.
 
 ### Screen or state without a requirement
 
@@ -155,6 +157,7 @@ Toggle (40×22) and slider thumb (18) sizes are tokens only: those components ar
 - "Copiar de outro perfil" for combos (PC · Editor — Combos).
 - Editable UDP port, "Abrir firewall", and automatic reconnection "enquanto este código valer" (PC · Pareamento).
 - Tray menu contents (R9 only says "ícone na bandeja").
+- The vibration on connection loss is a toggle, on by default (PC · Teste ao vivo); R7 says the Nova 2 Lite always vibrates.
 
 ### Conflict with a decision
 
@@ -163,7 +166,7 @@ Toggle (40×22) and slider thumb (18) sizes are tokens only: those components ar
 ### Inside the design
 
 - **Sizes differ between the design system board and the screens.** Screen title 28 vs 26, card title 18 vs 16, caption 12 vs 11, help 12 vs 13, field height 40 vs 36. The tokens follow the board.
-- **Phone touch target.** The icon buttons in the top bar of "Celular · Direção" are 48 px, under the 56 px rule.
+- **Phone touch target.** The top-bar buttons of "Celular · Direção" (options and "Tela escura") are 48 px tall, under the 56 px rule.
 - **No hover, pressed or keyboard-focus states** for buttons. egui uses `selected` for hovered stock widgets; the themed buttons keep one look.
 - **No light theme.**
 
