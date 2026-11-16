@@ -170,8 +170,8 @@ None. Each item found first was decided against the PRD (#7):
 
 ### Inside the design
 
-- **Sizes differ between the design system board and the screens.** Screen title 28 vs 26, card title 18 vs 16, caption 12 vs 11, help 12 vs 13, field height 40 vs 36. The tokens follow the board.
-- **Phone touch target.** The top-bar buttons of "Celular · Direção" (options and "Tela escura") are 48 px tall, under the 56 px rule.
+- **Sizes (#9): resolved, the board wins.** The screens now use the design system board's values, which `tokens.json` already held: screen title 28, card title 18, caption 12, help 12, field height 40. `tokens.json` is unchanged.
+- **Phone touch target (#9): resolved.** The top-bar buttons of "Celular · Direção" (options and "Tela escura") are now 56 px (`size.mobile_touch_target`); the top bar grew to 72 px to hold them.
 - **No hover, pressed or keyboard-focus states** for buttons. egui uses `selected` for hovered stock widgets; the themed buttons keep one look.
 - **No light theme.**
 
