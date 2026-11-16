@@ -130,10 +130,10 @@ Toggle (40×22) and slider thumb (18) sizes are tokens only: those components ar
 | --- | --- | --- |
 | 01 · PC · Status | R9 (status window, tray icon), R8 (missing driver notice), R6 (Recentralizar in the top bar), R3 (incl. Nova 2 Lite disconnected) and R7 (device states), R10 (active profile) | card, badge, button, alert; to build: sidebar nav, top-bar pill, profile selector, key-value row, tray menu |
 | 02 · PC · Pareamento | R2 (QR, token, network card choice) | card, badge, button, field, alert; to build: QR view, radio option list |
-| 03 · PC · Perfis | R10, R9 (profile editor entry) | button, badge, alert; to build: table, icon button, executable chip, confirm dialog, toast with undo |
+| 03 · PC · Perfis | R10, R9 (profile editor entry) | button, badge, alert; to build: table, icon button, executable chip, confirm dialog, toast |
 | 04 · PC · Editor de perfil — Direção | R5, R6 (recentre button choice), R10 (executables) | field, button, badge, alert; to build: tabs, radio mode cards, slider with value box, select, steering preview bar |
 | 05 · PC · Editor de perfil — Combos e botões da tela | R11, R12 | button, badge, field, alert; to build: table, key cap, Xbox button pill, segmented control, phone layout preview |
-| 06 · PC · Teste ao vivo | R9 (live test), R7 (incl. vibrate toggle), R14 (test vibration) | card, badge, button, alert, number text; to build: steering bar, trigger bars, stick view, button pills, latency chart, toggle |
+| 06 · PC · Teste ao vivo | R9 (live test), R7, R14 (test vibration) | card, badge, button, alert, number text; to build: steering bar, trigger bars, stick view, button pills, latency chart |
 | 07 · Celular · Pareamento | R2 (incl. camera denied), R1 (phone without rotation sensor) | `GwButton`, `StatusBadge`; to build: camera viewfinder |
 | 08 · Celular · Direção | R13 (incl. "Tela escura" button), R12, R6, R7, R1 (screen stays on) | `GwButton`, `StatusBadge`; to build: on-screen game button tile, angle indicator, output bar, dark-screen mode |
 
@@ -144,20 +144,25 @@ Toggle (40×22) and slider thumb (18) sizes are tokens only: those components ar
 None. The five gaps found first were added to the canvas (#6):
 
 - **R3**: "Nova 2 Lite desconectado" error state on 01 · PC · Status.
-- **R7**: "Vibrar o Nova 2 Lite ao perder conexão" toggle in the Conexão card of 06 · PC · Teste ao vivo.
+- **R7**: no setting. The Nova 2 Lite always gives a short vibration on connection loss, as R7 says (the toggle added for #6 was removed in #7).
 - **R13**: labelled "Tela escura" button in the top bar of 08 · Celular · Direção (double tap in the centre still leaves).
 - **R2 / R13**: "Câmera bloqueada" error state on 07 · Celular · Pareamento.
 - **R1**: "Celular incompatível" error state on 07 · Celular · Pareamento, shown on app start.
 
 ### Screen or state without a requirement
 
-- "Iniciar com o Windows" toggle (design system board).
-- "Exportar registro" and the fixed "manual" profile while testing (PC · Teste ao vivo).
-- Undo after deleting a profile; opening the profile folder and the TOML file in an editor (PC · Perfis).
-- "Copiar de outro perfil" for combos (PC · Editor — Combos).
-- Editable UDP port, "Abrir firewall", and automatic reconnection "enquanto este código valer" (PC · Pareamento).
-- Tray menu contents (R9 only says "ícone na bandeja").
-- The vibration on connection loss is a toggle, on by default (PC · Teste ao vivo); R7 says the Nova 2 Lite always vibrates.
+None. Each item found first was decided against the PRD (#7):
+
+| Item | Screen | Decision |
+| --- | --- | --- |
+| Automatic reconnection while the session token is valid | 02 · PC · Pareamento | Kept; now a check under R2 (backs the open-to-drive metric). |
+| Tray menu: status, open window, Recentralizar, quit and show the controller | 01 · PC · Status | Kept; now a check under R9. The "Perfil ›" submenu was removed. |
+| Editable UDP port, "Abrir firewall" | 02 · PC · Pareamento | Removed. The port is shown read-only; the firewall note stays (PRD risk). |
+| "Iniciar com o Windows" toggle | design system board | Removed. |
+| "Exportar registro", fixed "manual" profile | 06 · PC · Teste ao vivo | Removed. The test uses the active profile. |
+| Undo after deleting a profile, open the profile folder or TOML in an editor | 03 · PC · Perfis | Removed. The confirm dialog stays; an invalid TOML keeps "Recarregar". |
+| "Copiar de outro perfil" | 05 · PC · Editor — Combos | Removed. |
+| Vibration-on-loss toggle | 06 · PC · Teste ao vivo, design system board | Removed: R7 says the Nova 2 Lite always vibrates. |
 
 ### Conflict with a decision
 
@@ -178,7 +183,7 @@ None. The five gaps found first were added to the canvas (#6):
 
 ## Left for when the screens are built
 
-- Components: toggle, slider, segmented control, tabs, radio option, table, chip, key cap, toast, modal, sidebar, top bar, tray menu, and the phone's game button tile.
+- Components: slider, segmented control, tabs, radio option, table, chip, key cap, toast, modal, sidebar, top bar, tray menu, and the phone's game button tile.
 - Icons: the canvas uses inline stroke SVGs. Only the four alert icons exist (drawn with the egui painter).
 - Desktop strings module, and landscape lock plus keep-screen-on for the phone.
 - Compose field and alert, if a phone screen needs them.
