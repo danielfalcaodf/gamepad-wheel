@@ -172,14 +172,32 @@ None. Each item found first was decided against the PRD (#7):
 
 - **Sizes (#9): resolved, the board wins.** The screens now use the design system board's values, which `tokens.json` already held: screen title 28, card title 18, caption 12, help 12, field height 40. `tokens.json` is unchanged.
 - **Phone touch target (#9): resolved.** The top-bar buttons of "Celular · Direção" (options and "Tela escura") are now 56 px (`size.mobile_touch_target`); the top bar grew to 72 px to hold them.
-- **No hover, pressed or keyboard-focus states** for buttons. egui uses `selected` for hovered stock widgets; the themed buttons keep one look.
-- **No light theme.**
+- **Button states (#10): defined on the design system board** ("Estados dos botões"). Not in the code yet; see the table below.
+- **Shadows (#10): defined on the design system board** ("Sombras e tema"). Not in the code yet; see the table below.
+- **Light theme (#10): none, by intent.** The product is dark only in v1: it is played at night, the window sits next to the game, and the phone saves battery with the dark screen (R13).
+- **Alert title (#10): resolved, the canvas changed.** Alert titles are Inter 600 on every board, which matches `text.alert_title` and the code. Inter 700 is not embedded.
+
+New values from #10, to add to `tokens.json`, `tokens.rs` and `Tokens.kt` together (the drift tests fail until all three agree):
+
+| Proposed token | Value | Use |
+| --- | --- | --- |
+| `color.accent_hover` | `#A9B5FF` (same as `accent_text`) | primary button, hover |
+| `color.accent_pressed` | `#7584E8` | primary button, pressed |
+| `color.err_hover` | `#FF7B7B` (same as `err_text`) | danger button, hover |
+| `color.err_pressed` | `#E85A5A` | danger button, pressed |
+| (existing) `selected` / `border` | `#2A3142` / `#343B49` | secondary button, hover / pressed |
+| (existing) `surface_2` / `selected` | `#1D222C` / `#2A3142` | ghost button, hover / pressed (text turns `text`) |
+| `size.focus_outline`, `space.focus_offset` | 2, 2 | keyboard focus: solid `accent` outline, 2 px from the button; desktop only |
+| `shadow.menu` | 0 16 40, black 0.50 | menu, tray menu, toast |
+| `shadow.modal` | 0 24 60, black 0.60 | confirm dialog |
+| `shadow.window` | 0 30 80, black 0.50 | window mockup only (the OS draws the real one) |
+
+The phone has no hover: pressed applies to touch. `on_accent` text stays readable on `accent_pressed` and `err_pressed` (above 4.5:1).
 
 ### Deviations in this implementation
 
-- Alert titles use Inter 600; the canvas uses 700. Inter 700 is not embedded (only alert titles would use it).
 - One 10 px label on the combos screen uses JetBrains Mono 500; only 400 and 600 are embedded.
-- Shadows (menu, modal, window) are not tokens yet; egui keeps its defaults.
+- Shadows and button states: egui keeps its defaults until the tokens above are added.
 
 ## Left for when the screens are built
 
