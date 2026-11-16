@@ -86,6 +86,7 @@ A v1 inclui tudo o que é P0 e P1. P0 é o primeiro marco jogável; P1 completa 
 
 - [ ] Pacotes sem o token da sessão são descartados.
 - [ ] Com mais de uma placa de rede, o PC escolhe o IP da rede local, e é possível trocar na GUI.
+- [ ] Já pareado, o app reconecta sozinho ao abrir, sem escanear de novo, enquanto o token da sessão valer (meta de "tempo de abrir o programa até dirigir", em Métricas).
 
 **R3. Leitura do Nova 2 Lite.** O PC lê sticks, gatilhos e botões do controle no modo XBOX (dongle ou cabo).
 
@@ -124,6 +125,8 @@ Em todos os modos, se o stick esquerdo passar de um limiar, ele assume a direç�
 ### P1: completa a v1
 
 **R9. Interface gráfica.** Janela com status (celular, controle, HidHide, perfil ativo), editor de perfis e um teste ao vivo mostrando ângulo, saída do volante e gatilhos. Ícone na bandeja.
+
+- [ ] O menu do ícone na bandeja tem: status da conexão, abrir a janela, recentralizar (R6) e sair, com o Nova 2 Lite voltando a aparecer (R8).
 
 **R10. Perfis automáticos.** Cada perfil tem uma lista de executáveis; o perfil troca quando o jogo em primeiro plano muda. Há um perfil padrão para jogos sem perfil.
 
