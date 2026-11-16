@@ -166,7 +166,8 @@ None. Each item found first was decided against the PRD (#7):
 
 ### Conflict with a decision
 
-- **Layer button.** The combos screen uses View (Back) as the layer button, which is plan B of PRD Q2. The decided plan A is a macro signature on L4/R4.
+- **Layer button (#8): the design follows plan A, pending the Q2 spike.** 05 · PC · Editor — Combos and 06 · PC · Teste ao vivo now use L4/R4 as the layer: in the GameSir app both back buttons send a held macro LB + RB + R3, and the program decodes that signature. The layer field is read-only and shows whether the signature is detected. Because LB, RB and R3 are part of the signature, they cannot be the second button of a combo (validation shown on board 05); the gear combos moved from LB/RB to X/A.
+  - If the Q2 spike (`spikes/q1-xinput-probe`) shows the macro does not stay held, switch to plan B instead: View (Back) as the layer, in the PRD (R11, Q2) and on boards 05 and 06.
 
 ### Inside the design
 
