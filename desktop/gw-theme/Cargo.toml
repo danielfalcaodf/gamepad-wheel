@@ -1,0 +1,15 @@
+[package]
+name = "gw-theme"
+version = "0.1.0"
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+description = "egui theme for gamepad-wheel: design tokens, embedded fonts and component styles"
+
+[dependencies]
+egui = { version = "0.37.0", default-features = false }
+
+[dev-dependencies]
+eframe = { version = "0.37.0", default-features = false, features = ["glow", "x11", "wayland"] }
+serde_json = "1.0.154"

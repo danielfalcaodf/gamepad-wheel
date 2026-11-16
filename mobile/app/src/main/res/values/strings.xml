@@ -1,3 +1,20 @@
 <resources>
-    <string name="app_name">gamepad-wheel</string>
+    <string name="app_name">Gamepad Volante</string>
+
+    <!-- Theme showcase (phase 0 only). -->
+    <string name="showcase_intro">Catálogo do tema. Um acento (lavanda) para ação; verde, âmbar e vermelho só para estado.</string>
+    <string name="showcase_colors">Cores</string>
+    <string name="showcase_type">Tipografia</string>
+    <string name="showcase_sample">+45,0° · 12 ms · Perfil ativo</string>
+    <string name="showcase_buttons">Botões</string>
+    <string name="showcase_button_primary">Começar a dirigir</string>
+    <string name="showcase_button_secondary">Cancelar</string>
+    <string name="showcase_button_ghost">Restaurar padrão</string>
+    <string name="showcase_button_disabled">Desativado</string>
+    <string name="showcase_badges">Selos de status</string>
+    <string name="showcase_badge_off">Não pareado</string>
+    <string name="showcase_badge_info">Procurando código</string>
+    <string name="showcase_badge_ok">Conectado</string>
+    <string name="showcase_badge_warn">Latência alta</string>
+    <string name="showcase_badge_err">Conexão perdida</string>
 </resources>

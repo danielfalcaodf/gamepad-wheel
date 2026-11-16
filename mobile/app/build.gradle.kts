@@ -34,3 +34,8 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
     testImplementation(libs.junit)
 }
+
+// TokensTest compares Tokens.kt with this file, so a change to it must rerun the tests.
+tasks.withType<Test>().configureEach {
+    inputs.file(rootProject.file("../docs/design/tokens.json"))
+}

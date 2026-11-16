@@ -3,9 +3,9 @@ name: desktop
 on:
   push:
     branches: [develop, main]
-    paths: [desktop/**, rust-toolchain.toml, .github/workflows/desktop.yml]
+    paths: [desktop/**, rust-toolchain.toml, .github/workflows/desktop.yml, docs/design/tokens.json, mobile/app/src/main/res/font/**]
   pull_request:
-    paths: [desktop/**, rust-toolchain.toml, .github/workflows/desktop.yml]
+    paths: [desktop/**, rust-toolchain.toml, .github/workflows/desktop.yml, docs/design/tokens.json, mobile/app/src/main/res/font/**]
 
 jobs:
   check:
@@ -23,3 +23,9 @@ jobs:
       - run: cargo clippy --all-targets -- -D warnings
       - run: cargo test
       - run: cargo build --release
+      # The theme catalogue, to check the look on a real Windows machine.
+      - run: cargo build --release -p gw-theme --example showcase
+      - uses: actions/upload-artifact@v7
+        with:
+          name: theme-showcase-windows
+          path: desktop/target/release/examples/showcase.exe

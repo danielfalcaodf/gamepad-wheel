@@ -3,30 +3,13 @@ package io.github.danielfalcaodf.gamepadwheel
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
+import io.github.danielfalcaodf.gamepadwheel.ui.theme.GwTheme
+import io.github.danielfalcaodf.gamepadwheel.ui.theme.Showcase
 
-/** Phase 0: an empty screen that only proves the toolchain and CI work. */
+/** Phase 0: shows the theme's component catalogue. No product screen exists yet. */
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent { MaterialTheme { Surface { Banner() } } }
+        setContent { GwTheme { Showcase() } }
     }
-}
-
-fun bannerText(appName: String): String = "$appName: phase 0"
-
-@Composable
-fun Banner() {
-    Text(bannerText(stringResource(R.string.app_name)))
-}
-
-@Preview
-@Composable
-private fun BannerPreview() {
-    MaterialTheme { Banner() }
 }
