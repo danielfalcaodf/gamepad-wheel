@@ -8,6 +8,13 @@ Throwaway programs that answer the PRD open questions (`docs/PRD.md`, "Perguntas
 | [q4-vigem-pad](q4-vigem-pad/) | Q4 (ViGEmBus + `vigem-rust` work) and the rumble half of R14 |
 | [q5-scancode-keys](q5-scancode-keys/) | Q5 (scan-code keys reach the games) |
 
+Two scripts run the checks and print a YES/NO per question (run as administrator, `-Bin` = folder with the `.exe` files):
+
+| Script | Where | Covers |
+|---|---|---|
+| [winlab-check.ps1](winlab-check.ps1) | any Windows with ViGEmBus and HidHide, VM included; no controller | Q4, Q1 mechanism (a ViGEm pad stands in for the Nova 2 Lite) |
+| [dual-boot-check.ps1](dual-boot-check.ps1) | bare-metal Windows with the Nova 2 Lite in XBOX mode | Q1 with the real dongle, Q2, rumble on the Nova |
+
 Q3 and Q7 are answered without code, and Q6 is deferred to the end of phase 1 (see the PRD).
 
 ## Getting the .exe files

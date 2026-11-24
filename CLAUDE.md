@@ -6,6 +6,15 @@ Turns an Android phone (gyroscope) + a GameSir Nova 2 Lite into a single virtual
 - Layout and toolchains: ADR 0001 (`desktop/` Rust, `mobile/` Android, `spikes/`). Run all checks with `scripts/check.sh` (Rust runs in Docker). Do not add a framework without an issue/decision on record.
 - Docs, code comments, commits, issues and PRs are written in **English**.
 
+## Windows testing (WinLab VM)
+
+The dev machine is NixOS; Windows-only code runs in the VirtualBox VM **WinLab** (Windows 11, ViGEmBus, HidHide, Rust, VS Build Tools; no games).
+
+- Drive it from the host: `VBoxManage controlvm WinLab screenshotpng <file>` and `keyboardputstring`. Once `W:\kit\06-claude-runner.ps1` is running in an admin PowerShell, drop scripts into `/mnt/win/VMShare/pessoal/jobs/` (`W:\jobs`) and read `W:\out\<name>.txt` (ends with `__EXIT <code>`).
+- The repo is shared read-only as `\\VBoxSvr\gamepad-wheel`; build under `C:\src` (`CARGO_TARGET_DIR=C:\build\target`).
+- Never take VirtualBox snapshots: the disk is shared with the dual-boot Windows.
+- The Nova 2 Lite cannot stay in XBOX mode inside the VM (the dongle falls back to DS4 mode when a Linux host enumerates it first). Real-controller checks run on the dual-boot Windows; in the VM a ViGEm pad stands in for it (`spikes/winlab-check.ps1`).
+
 ## Branches (gitflow)
 
 `develop` is the default branch. Always branch `feature/*` or `fix/*` from it; `main` only receives `release/*` and `hotfix/*`. Full rules: `.claude/rules/gitflow.md` and `.claude/rules/commits-and-prs.md`.
